@@ -1,0 +1,84 @@
+body {
+    article {
+        font: $body-text;
+        padding-top:20px;
+        p {
+            font: $body-text;
+        }
+
+        //anchors on headings:
+        h2, h3 {
+            &:before {
+                display: block;
+                content: " ";
+                margin-top: -85px;
+                height: 85px;
+                visibility: hidden;
+            }
+        }
+    }
+}
+article {
+    @media only screen and (max-width: $break-point-midsmall) {
+        padding:0px;
+        margin: 0px -20px;
+    } 
+    h2 {
+        @media only screen and (max-width: $break-point-medium) {
+            font-size:24px;
+            line-height:28px;
+        }   
+    }
+    h3 {
+        @media only screen and (max-width: $break-point-medium) {
+            font-size:20px;
+            line-height:22px;
+        }   
+    }
+    table {
+        border-color: $charcoal;
+        tr:nth-child(even) {
+            background: $light-grey;
+        }
+        tr {
+            td, th {
+                padding: 5px 1%;
+                vertical-align: top;
+                text-align: left;
+                word-wrap: break-word;
+            }
+        }
+    }
+}
+
+h1 {
+    font: $title-h1;
+}
+
+    //hide print logo
+    #print-logo {display:none;}
+
+    .container {
+        .container {
+            width: auto;
+        }
+    }
+
+section.feature-bg {
+    background :transparent url('../images/bg/top-feature.png') no-repeat center top;
+}
+
+.container {
+@media only screen and (min-width: 768px) {
+        width: auto;
+    }
+}
+
+//removing white space on resources landing
+article#node-13801 {
+    display: none;
+}
+
+.container ul li .media {
+    overflow: visible;
+}

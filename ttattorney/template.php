@@ -1,0 +1,239 @@
+<?php
+/**
+ * @file
+ * The primary PHP file for this theme.
+ */
+
+define('BLOCK_ID_FOOTER_MENU', 'menu_block-1');
+define('BLOCK_ID_FOOTER_SUB_MENU', 'menu-menu-footer-sub-menu');
+define('MENU_BLOCK_DELTA_SIBLINGS', 2);
+
+function ttattorney_js_alter(&$javascript) {
+	// bootstrap requires a later version of jquery
+	$javascript['misc/jquery.js']['data'] = drupal_get_path('theme', 'ttattorney') . '/js/jquery-1.11.3.min.js';
+}
+	
+function ttattorney_preprocess_html(&$variables) {
+
+ 	// add section classes for each ip right (section-patents, section-designs etc.)
+	$trail = menu_get_active_trail();
+	if (!empty($trail[1]['link_title'])) {
+		$variables['classes_array'][] = 'section-' . drupal_clean_css_identifier(strtolower($trail[1]['link_title']));
+	}
+
+}
+
+function ttattorney_preprocess_page(&$vars, $hook) {
+	// override the default primary nav render array. see
+	// template.inc:template_preprocess_page() and
+	// page.vars.php:bootstrap_preprocess_page() for where these variables are
+	// originally set. see also http://dnotes.net/blogs/david-hunt/how-change-
+	// theme-or-alter-drupal-7-primary-links-1063.
+	// __ttattorney_mega_menu() depends on menu_block being around, so just
+	// leave the menu as is if menu_block isn't enabled.
+	if ($vars['main_menu'] && module_exists('menu_block')) {
+		$vars['primary_nav'] = __ttattorney_mega_menu();
+	}
+	if (isset($vars['node']->type)) {
+		// allow page--type.tpl.php, e.g. page--trade_mark_certification_rules.tpl.php
+		$vars['theme_hook_suggestions'][] = 'page__' . $vars['node']->type;
+	}
+	if (drupal_is_front_page()) {
+		// homepage doesn't have sidebars
+		$vars['content_column_class'] = ' class="col-sm-12"';
+	}
+}
+
+function ttattorney_menu_block_tree_alter(&$tree, &$config) {
+	// remove the current page from the "siblings" menu (i.e. we want this
+	// menu to show all items at this level except for the page that we're
+	// already looking at)
+	if ($config['delta'] == MENU_BLOCK_DELTA_SIBLINGS) {
+		$current_link = menu_link_get_preferred();
+		foreach (element_children($tree) as $key) {
+			$value = &$tree[$key];
+			if ($value['link']['mlid'] == $current_link['mlid']) {
+				unset($tree[$key]);
+				break;
+			}
+		}
+	}
+}
+
+function ttattorney_block_view_alter(&$data, $block) {
+	$bid = $block->module . '-' . $block->delta;
+	if ($bid == BLOCK_ID_FOOTER_MENU) {
+		/*
+		 * We want to add col-md-3 and col-sm-6 classes to the <li> elements
+		 * at the top level of our multilevel footer nav.
+		 * 
+		 * We want the classes directly on the <li>, not on the <a>.
+		 * menu_attributes won't work since it only puts classes on the <a>
+		 * tag.
+		 * 
+		 * We want the classes on the top level <li> elements only, so
+		 * theme_menu_link__menu_footer_menu() won't work, since that's called
+		 * for every level of the menu.
+		 * 
+		 * We can't just add classes in hook_menu_block_tree_alter() because
+		 * menu_tree_output() runs afterwards and will reset any
+		 * #attributes->class we set. Similarly we can't set a #theme
+		 * suggestion in hook_menu_block_tree_alter() because
+		 * menu_block_tree_output() runs afterwards and will reset any #theme
+		 * we set.
+		 * 
+		 * hook_preprocess_block() can't do it - we can add the classes to all
+		 * the element children of elements->#content in there, but by the
+		 * time preprocess_block is called the menu has already been rendered
+		 * in to $variables['content']. We can't use drupal_render() inside
+		 * hook_preprocess_block to rerender our content, since
+		 * drupal_render() calls theme() which calls hook_preprocess_block(),
+		 * so we'll recurse infinitely. We could copy some code out of
+		 * drupal_render() to try and rerender the content after adding our
+		 * classes, but that seems a bit nasty.
+		 * 
+		 * I'd prefer to avoid dodgy hacks like rewriting the DOM with jquery
+		 * or rewriting the rendered content with regular expressions.
+		 * 
+		 * So we use hook_block_view_alter().
+		 */
+		foreach (element_children($data['content']['#content']) as $key) {
+			$value = &$data['content']['#content'][$key];
+			array_push($value['#attributes']['class'], 'col-md-3', 'col-sm-6');
+		}
+	} 
+}
+
+function ttattorney_preprocess_block(&$vars) {
+	// add which section we are in to the body so we can style based on
+	// section of the site we're in 
+
+	$trail = menu_get_active_trail();
+	if (!empty($trail[1]['link_title'])) {
+		$vars['classes_array'][] = 'section-' . drupal_clean_css_identifier(strtolower($trail[1]['link_title']));
+	}
+	$bid = $vars['block']->module . '-' . $vars['block']->delta;
+	// some blocks need a <div class="container"> inside the <section>,
+	// wrapping the block content. add a theme suggestion for that.
+	if (in_array($bid, array(BLOCK_ID_FOOTER_MENU, BLOCK_ID_FOOTER_SUB_MENU)) ||
+		$vars['block']->region == 'content_top') /*|| $vars['block']->region == 'content_top')*/ {
+		$vars['theme_hook_suggestions'][] = 'block__with_container';
+	} 
+}
+
+function ttattorney_preprocess_region(&$vars) {
+	$region = $vars['region'];
+	// header blocks shouldn't have wrapper markup
+	switch ($region) {
+		case 'content_top':
+		case 'header':
+			$vars['theme_hook_suggestions'][] = 'region__no_wrapper';
+			break;
+		case 'content_bottom':
+			$vars['theme_hook_suggestions'][] = 'region__with_container';
+			break;
+	}
+}
+
+function ttattorney_form_search_api_page_search_form_default_search_alter(&$form, &$form_state, $form_id) {
+	// update the placeholder text for the search form in the header
+	$form['keys_1']['#attributes']['placeholder'] = 'Search website';
+}
+
+function ttattorney_theme($existing, $type, $theme, $path) {
+	// tell the theme registry code that we have some ttattorney_menu_link__*
+	// and ttattorney_menu_tree_* theme hooks
+	return array(
+		'menu_link' => array(
+			'pattern' => 'menu_link__',
+			'render element' => 'element',
+		),
+		'menu_tree' => array(
+			'pattern' => 'menu_tree__',
+			'render element' => 'tree',
+		),
+	);
+}
+
+// intentionally overriding bootstrap_menu_link to avoid the "dropdown"
+// classes that we don't want
+function ttattorney_menu_link(array $variables) {
+  $element = $variables['element'];
+  $sub_menu = '';
+
+  if ($element['#below']) {
+    $sub_menu = drupal_render($element['#below']);
+  }
+  $output = l($element['#title'], $element['#href'], $element['#localized_options']);
+  return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $sub_menu . "</li>\n";
+}
+
+function ttattorney_file_link($variables) {
+	$file = $variables['file'];
+	$icon_directory = $variables['icon_directory'];
+
+	$url = file_create_url($file->uri);
+
+	$mimetype_name = '';
+	{
+		// Human-readable names, for use as text-alternatives to icons.
+		$mime_name = array(
+			'application/msword' => t('Microsoft Office document'),
+			'application/vnd.ms-excel' => t('Office spreadsheet'),
+			'application/vnd.ms-powerpoint' => t('Office presentation'),
+			'application/pdf' => t('PDF'),
+			'video/quicktime' => t('movie'),
+			'audio/mpeg' => t('audio'),
+			'audio/wav' => t('audio'),
+			'image/jpeg' => t('image'),
+			'image/png' => t('image'),
+			'image/gif' => t('image'),
+			'application/zip' => t('package'),
+			'text/html' => t('HTML'),
+			'text/plain' => t('plain text'),
+			'application/octet-stream' => t('binary data'),
+		);
+
+		$mimetype = file_get_mimetype($file->uri);
+
+		$mimetype_name = !empty($mime_name[$mimetype]) ? $mime_name[$mimetype] : t('File');
+	}
+
+	$icon = theme('file_icon', array(
+		'file' => $file,
+		'icon_directory' => $icon_directory,
+		'alt' => $mimetype_name,
+	));
+
+	// Set options as per anchor format described at
+	// http://microformats.org/wiki/file-format-examples
+	$options = array(
+		'attributes' => array(
+			'type' => $file->filemime . '; length=' . $file->filesize,
+		),
+	);
+
+	// Use the description as the link text if available.
+	if (empty($file->description)) {
+		$link_text = $file->filename;
+	}
+	else {
+		$link_text = $file->description;
+		$options['attributes']['title'] = check_plain($file->filename);
+	}
+
+	return 
+		'<span class="file">' . 
+		format_string(
+			'!link !icon in @mimetype_name format [@size]', 
+			array(
+				'!link' => l($link_text, $url, $options),
+				'!icon' => $icon,
+				'@mimetype_name' => $mimetype_name,
+				'@size' => format_size($file->filesize)
+			)
+		) .
+		'</span>';
+}
+
+include_once dirname(__FILE__) . '/includes/megamenu.inc';
