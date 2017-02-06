@@ -1,2 +1,2 @@
-# psb-theme
-Theme for PSB website.
+# TTAttorney-theme
+Theme for Trans Tasman IP Attorney website.
