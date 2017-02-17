@@ -13,7 +13,7 @@ header{
         }
         img {
             margin-top: 40px;
-            width: 100%;
+            //width: 100%;
             @media only screen and (max-width: $break-point-medium - 1) {
                 width: 100%;
                 margin-top: 15px;
@@ -167,6 +167,14 @@ header{
             }
         }
 
+    }
+    section {
+        &#heading {
+            background: #eeefee;
+            font-size: 30px;
+            color: #143d55;
+            padding: 15px 0;
+        }
     }
 
 }
