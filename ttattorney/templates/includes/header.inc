@@ -5,10 +5,10 @@
         <div class="container">
 
             <?php if ($logo): ?>
-                <a class="logo pull-left col-md-4" href="<?php print $front_page; ?>" title="<?php print t('Australian Government'); ?>">
+                <a class="logo col-md-4" href="<?php print $front_page; ?>" title="<?php print t('Australian Government'); ?>">
                     <img src="<?php print $logo; ?>" alt="<?php print t('Australian Government'); ?>" />
                 </a>
-                <a class="logo pull-left col-md-4" href="<?php print $front_page; ?>" title="<?php print t('New Zealand Government'); ?>">
+                <a class="logo col-md-4" href="<?php print $front_page; ?>" title="<?php print t('New Zealand Government'); ?>">
                     <img src="<?php print $path_to_theme . "/logo_nz.png" ?>" alt="<?php print t('New Zealand Government'); ?>" />
                 </a>
             <?php endif; ?>

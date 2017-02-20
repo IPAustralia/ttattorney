@@ -3,20 +3,21 @@ header{
         margin: 0px;
         padding:0px;
         @media only screen and (max-width: $break-point-large) {
-            width:39%;
+            width:100%;
         }
         @media only screen and (max-width: $break-point-medium) {
-            width:39%;
+            width:100%;
         }
         @media only screen and (max-width: $break-point-midsmall) {
-            width:50%;
+            width:100%;
         }
         img {
-            margin-top: 40px;
-            //width: 100%;
+            margin-top: 30px;
+            width: 100%;
+            max-width:350px;
             @media only screen and (max-width: $break-point-medium - 1) {
                 width: 100%;
-                margin-top: 15px;
+                margin-top: 10px;
                 margin-bottom:10px;
             }
         }
@@ -33,9 +34,9 @@ header{
         .header-right {
             padding-right: 0px;
             @media only screen and (max-width: $break-point-large) {
-                float:right;
+                /* float:right;
                 width:61%;
-                padding:0px;
+                padding:0px; */
             } 
             section{
                 float: right;
@@ -57,7 +58,8 @@ header{
                 @media only screen and (max-width: $break-point-large) {
                     margin-left:5px;
                     &.block-search-api-page {
-                        width:200px;
+                        //width:200px;
+                        width: 100%;
                     }
                 } 
                 @media only screen and (max-width: $break-point-medium - 1) {
