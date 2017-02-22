@@ -10,17 +10,22 @@ header {
         }
         @media only screen and (max-width: $break-point-medium - 1) {
             .navbar-header {
-                position: absolute;
-                top: 20px;
-                right: 0px;
+                //position: absolute;
+                //top: 20px;
+                //right: 0px;
+                background: $dark-blue;
+                height: 60px;
+                color: #fff;
+
                 button {
                     border:0px;
-                    border: 0px;
                     border-radius: 0px;
                     width:48px;
                     height:34px;
+                    background: transparent;
+                    margin-top: -8px;
                     &:hover, &:active, &:focus {
-                        background-color: $dark-blue !important;
+                        background-color: transparent !important;
                     }
                     &:before { 
                         @include fa-icon('\f00d', $white, 3em );
@@ -43,7 +48,7 @@ header {
             left: 0;
             position: fixed !important;
             right: 0;
-            top: 0 !important;
+            top: 80px !important;
             z-index: 1000;
         }
         .nav-tabs {

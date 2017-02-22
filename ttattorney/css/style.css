@@ -357,22 +357,14 @@ apply sticky styling to sticky sub menu
 header .logo {
   margin: 0px;
   padding: 0px; }
-  @media only screen and (max-width: 992px) {
-    header .logo {
-      width: 39%; } }
-  @media only screen and (max-width: 768px) {
-    header .logo {
-      width: 39%; } }
-  @media only screen and (max-width: 640px) {
-    header .logo {
-      width: 50%; } }
   header .logo img {
-    margin-top: 40px;
-    width: 100%; }
+    margin-top: 30px;
+    width: 100%;
+    max-width: 350px; }
     @media only screen and (max-width: 767px) {
       header .logo img {
-        width: 100%;
-        margin-top: 15px;
+        width: 90%;
+        margin-top: 10px;
         margin-bottom: 10px; } }
 header .header {
   background: #143d55;
@@ -382,14 +374,14 @@ header .header {
     header .header {
       padding-bottom: 10px;
       border-bottom: 2px solid #333;
-      min-height: 100px; } }
+      min-height: 250px; } }
   header .header .header-right {
     padding-right: 0px; }
     @media only screen and (max-width: 992px) {
       header .header .header-right {
-        float: right;
-        width: 61%;
-        padding: 0px; } }
+        /* float:right;
+        width:61%;
+        padding:0px; */ } }
     header .header .header-right section {
       float: right;
       margin-top: 20px;
@@ -411,9 +403,7 @@ header .header {
             width: 200px; } }
       @media only screen and (max-width: 767px) {
         header .header .header-right section {
-          display: none; }
-          header .header .header-right section.block-search-api-page {
-            width: 100%; } }
+          display: none; } }
     header .header .header-right a {
       color: #fff; }
     header .header .header-right .block-search-api-page {
@@ -422,6 +412,9 @@ header .header {
       padding: 0;
       width: 360px;
       border-radius: 6px; }
+      @media only screen and (max-width: 767px) {
+        header .header .header-right .block-search-api-page {
+          width: 80%; } }
       header .header .header-right .block-search-api-page input.form-text {
         background: transparent none repeat scroll 0 0;
         border: 0 none;
@@ -451,10 +444,6 @@ header .header {
         @media only screen and (max-width: 992px) {
           header .header .header-right .block-search-api-page input.form-text {
             width: 140px;
-            padding: 13px 15px 15px; } }
-        @media only screen and (max-width: 767px) {
-          header .header .header-right .block-search-api-page input.form-text {
-            width: 80%;
             padding: 13px 15px 15px; } }
       header .header .header-right .block-search-api-page .form-group {
         margin: 0px; }
@@ -592,8 +581,11 @@ header nav #header-navigation-container {
 @media only screen and (max-width: 767px) {
   header nav .navbar-header {
     position: absolute;
-    top: 20px;
+    top: 150px;
     right: 0px; }
+    header nav .navbar-header .is_stuck {
+      top: 0px;
+      height: 80px; }
     header nav .navbar-header button {
       border: 0px;
       border: 0px;
@@ -619,7 +611,7 @@ header nav.is_stuck {
   left: 0;
   position: fixed !important;
   right: 0;
-  top: 0 !important;
+  top: 80px !important;
   z-index: 1000; }
 header nav .nav-tabs {
   border: 0px;
