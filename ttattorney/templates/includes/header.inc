@@ -1,20 +1,29 @@
+<?php $path_to_theme = "/" . drupal_get_path('theme', 'ttattorney'); ?>
 <header id="navbar" role="banner">
 
     <div class="header">
         <div class="container">
 
             <?php if ($logo): ?>
-                <a class="logo pull-left col-md-4" href="<?php print $front_page; ?>" title="<?php print t('Trans Tasman IP Attorney Board'); ?>">
-                    <img src="<?php print $logo; ?>" alt="<?php print t('Trans Tasman IP Attorney Board'); ?>" />
+                <a class="logo col-sm-4" href="<?php print $front_page; ?>" title="<?php print t('Australian Government'); ?>">
+                    <img src="<?php print $logo; ?>" alt="<?php print t('Australian Government'); ?>" />
+                </a>
+                <a class="logo col-sm-4" href="<?php print $front_page; ?>" title="<?php print t('New Zealand Government'); ?>">
+                    <img src="<?php print $path_to_theme . "/logo_nz.png" ?>" alt="<?php print t('New Zealand Government'); ?>" />
                 </a>
             <?php endif; ?>
-            <div class="col-md-8 header-right">
+            <div class="col-sm-4 header-right">
                 <?php print render($page['header']); ?>
             </div>
 
         </div>
     </div>
-
+    <section id="heading">
+        <div class="container">
+        <!-- TODO: Add If <front> then h1 else stylised text (p?) -->
+            <span class="site-name">Trans Tasman IP Attorney Board</span>
+        </div>
+    </section>
     <nav class="navbar-default" role="navigation">
         
         <div class="navbar-header">
