@@ -374,7 +374,7 @@ header .header {
     header .header {
       padding-bottom: 10px;
       border-bottom: 2px solid #333;
-      min-height: 250px; } }
+      min-height: 110px; } }
   header .header .header-right {
     padding-right: 0px; }
     @media only screen and (max-width: 992px) {
@@ -609,7 +609,7 @@ header nav.is_stuck {
   left: 0;
   position: fixed !important;
   right: 0;
-  top: 80px !important;
+  top: 0px !important;
   z-index: 1000; }
 header nav .nav-tabs {
   border: 0px;
@@ -742,14 +742,17 @@ header nav .nav-tabs {
     box-shadow: 0 5px 4px rgba(0, 0, 0, 0.5);
     margin-top: 0 !important;
     position: absolute;
-    width: 100%;
-    padding: 20px 40px; }
+    padding: 20px 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    min-width: 98%; }
     @media only screen and (max-width: 767px) {
       header nav .nav-tabs .dropdown-menu {
         position: relative;
         box-shadow: none;
         padding: 0px;
-        margin-bottom: 0px; } }
+        margin-bottom: 0px;
+        width: 100%; } }
     header nav .nav-tabs .dropdown-menu a {
       font-size: 14px;
       padding: 0px;
