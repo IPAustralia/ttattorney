@@ -580,20 +580,18 @@ header nav #header-navigation-container {
       margin-top: -1px; } }
 @media only screen and (max-width: 767px) {
   header nav .navbar-header {
-    position: absolute;
-    top: 150px;
-    right: 0px; }
-    header nav .navbar-header .is_stuck {
-      top: 0px;
-      height: 80px; }
+    background: #143d55;
+    height: 60px;
+    color: #fff; }
     header nav .navbar-header button {
-      border: 0px;
       border: 0px;
       border-radius: 0px;
       width: 48px;
-      height: 34px; }
+      height: 34px;
+      background: transparent;
+      margin-top: -8px; }
       header nav .navbar-header button:hover, header nav .navbar-header button:active, header nav .navbar-header button:focus {
-        background-color: #143d55 !important; }
+        background-color: transparent !important; }
       header nav .navbar-header button:before {
         content: "";
         font-size: 3em;
@@ -2267,5 +2265,3 @@ footer.footer {
   font-size: 18px;
   font: "opensans-semibold", sans-serif;
   text-transform: uppercase; }
-
-/*# sourceMappingURL=style.css.map */
