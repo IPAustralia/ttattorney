@@ -48,7 +48,7 @@ header {
             left: 0;
             position: fixed !important;
             right: 0;
-            top: 80px !important;
+            top: 0px !important;
             z-index: 1000;
         }
         .nav-tabs {
@@ -216,13 +216,17 @@ header {
                 box-shadow: 0 5px 4px rgba(0,0,0, 0.5);
                 margin-top: 0 !important;
                 position: absolute;
-                width: 100%;
-                padding: 20px 40px;
+                //width: 100%;
+                padding: 20px 20px;
+                margin-left: 10px;
+                margin-right: 10px;
+                min-width: 98%;
                 @media only screen and (max-width: $break-point-medium - 1) {
                     position:relative;
                     box-shadow:none;
                     padding:0px;
                     margin-bottom:0px;
+                    width:100%
                 }
 
                 a {
