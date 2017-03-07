@@ -21,7 +21,7 @@
     <section id="heading">
         <div class="container">
         <!-- TODO: Add If <front> then h1 else stylised text (p?) -->
-            <span class="site-name">Trans Tasman IP Attorneys Board</span>
+            <span class="site-name">Trans-Tasman IP Attorneys Board</span>
         </div>
     </section>
     <nav class="navbar-default" role="navigation">
